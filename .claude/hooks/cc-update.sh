@@ -41,7 +41,7 @@ extract_version() {
 }
 
 curr_ver=$(extract_version)
-latest_ver=$(printf '%s' "${1:-}" | tr -d '\n\r ')
+latest_ver=""
 
 fetch_latest_version() {
     if [ -n "$latest_ver" ]; then return; fi
@@ -153,6 +153,11 @@ main() {
         esac
     done
     [ -n "$version_arg" ] && latest_ver=$(printf '%s' "$version_arg" | tr -d '\n\r ')
+
+    # If we're skipping fetch and no version explicitly provided, treat current as target
+    if [ "${SKIP_FETCH:-false}" = "true" ] && [ -z "$version_arg" ]; then
+        latest_ver="$curr_ver"
+    fi
 
     fetch_latest_version
     [ "$curr_ver" = "$latest_ver" ] && { log "Already on latest version ($curr_ver)."; exit 0; }
