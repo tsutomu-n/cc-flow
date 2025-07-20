@@ -14,15 +14,6 @@ JQ=${JQ_CMD:-${JSON_CMD:-${CCF_JQ:-jq}}}
 CURL=${CCF_CURL:-curl}
 WGET=${CCF_WGET:-wget}
 
-# --- Global flags ------------------------------------------------------------
-YES_MODE=false
-
-# ANSI color codes for summary
-CLR_GREEN='\033[32m'
-CLR_YELLOW='\033[33m'
-CLR_RED='\033[31m'
-CLR_RESET='\033[0m'
-
 err() { printf "\033[31m[cc-update] %s\033[0m\n" "$1" >&2; }
 log() { printf "[cc-update] %s\n" "$1"; }
 
@@ -31,9 +22,7 @@ PROJECT_ROOT="$(pwd)"
 CLAUDE_DIR="${PROJECT_ROOT}/.claude"
 SETTINGS_JSON="${CLAUDE_DIR}/settings.json"
 STAGING_DIR="${CLAUDE_DIR}/.update-staging"
-# Upstream repository (raw and archive base)
-UPSTREAM_REPO="https://raw.githubusercontent.com/tsutomu-n/cc-flow/main"
-TAR_REPO="https://github.com/tsutomu-n/cc-flow"
+UPSTREAM_REPO="https://raw.githubusercontent.com/anthropics/claude-code-flow/main"
 
 # Ensure jq exists
 # Helper: extract version even in JSON with comments
@@ -43,7 +32,7 @@ extract_version() {
 }
 
 curr_ver=$(extract_version)
-latest_ver=""
+latest_ver=$(printf '%s' "${1:-}" | tr -d '\n\r ')
 
 fetch_latest_version() {
     if [ -n "$latest_ver" ]; then return; fi
@@ -60,7 +49,7 @@ fetch_latest_version() {
 fetch_upstream_archive() {
     log "Fetching Claude Code Flow ${latest_ver} …"
     mkdir -p "$STAGING_DIR"
-    tarball_url="${TAR_REPO}/archive/refs/tags/${latest_ver}.tar.gz"
+    tarball_url="https://github.com/anthropics/claude-code-flow/archive/refs/tags/${latest_ver}.tar.gz"
     if command -v "$CURL" >/dev/null 2>&1; then
         "$CURL" -fsSL "$tarball_url" | tar -xz -C "$STAGING_DIR" --strip-components=1 .claude
     else
@@ -96,24 +85,13 @@ compare_and_summarise() {
     done < <(find "$CLAUDE_DIR" -type f -print0)
 
     log "\nChange summary:\n----------------"
-    while read -r status path; do
-        case "$status" in
-            A) printf "${CLR_GREEN}A %s${CLR_RESET}\n" "$path" ;;
-            M) printf "${CLR_YELLOW}M %s${CLR_RESET}\n" "$path" ;;
-            D) printf "${CLR_RED}D %s${CLR_RESET}\n" "$path" ;;
-        esac
-    done < "$summary_file"
-
-    if [ "$YES_MODE" = true ]; then
-        log "YES mode active — proceeding automatically."
-    else
-        printf '\nProceed with update? [y/N]: '
-        read -r ans
-        case "$ans" in
-            y|Y) ;;
-            *) err "Update aborted by user"; exit 1;;
-        esac
-    fi
+    cat "$summary_file"
+    printf '\nProceed with update? [y/N]: '
+    read -r ans
+    case "$ans" in
+        y|Y) ;;
+        *) err "Update aborted by user"; exit 1;;
+    esac
 }
 
 apply_update() {
@@ -146,21 +124,6 @@ fetch_archive() {
 }
 
 main() {
-    # --- Parse arguments ----------------------------------------------------
-    version_arg=""
-    for arg in "$@"; do
-        case "$arg" in
-            -y|--yes) YES_MODE=true ;;
-            *) version_arg="$arg" ;;
-        esac
-    done
-    [ -n "$version_arg" ] && latest_ver=$(printf '%s' "$version_arg" | tr -d '\n\r ')
-
-    # If we're skipping fetch and no version explicitly provided, treat current as target
-    if [ "${SKIP_FETCH:-false}" = "true" ] && [ -z "$version_arg" ]; then
-        latest_ver="$curr_ver"
-    fi
-
     fetch_latest_version
     [ "$curr_ver" = "$latest_ver" ] && { log "Already on latest version ($curr_ver)."; exit 0; }
     log "Current version: $curr_ver, Target version: $latest_ver"
