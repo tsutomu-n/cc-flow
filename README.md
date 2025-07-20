@@ -60,6 +60,7 @@ $ sh .claude/hooks/bootstrap.sh
 
 ---
 ## 1 日のワークフロー
+> 毎朝 `bootstrap.sh` で生成された **`/cc-session-start`** コマンドを一度実行するだけで、AI は *昨日の作業サマリー・GOAL.md・最新コード状態* を読み込み、今日の最適なタスク計画を提案します。
 ```text
 /cc-session-start   →  作業 (/edit など)  →  /cc-task-done
         ↓                                       ↓
