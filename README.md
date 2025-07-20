@@ -75,10 +75,10 @@ $ sh .claude/hooks/bootstrap.sh
 
 ```bash
 # 最新版へ非対話更新
-$ .claude/hooks/cc-update.sh -y
+$ cc-hooks/cc-update.sh -y
 
 # v0.1.0 へ固定
-$ .claude/hooks/cc-update.sh v0.1.0
+$ cc-hooks/cc-update.sh v0.1.0
 ```
 
 | オプション/環境変数 | 説明 |
@@ -103,8 +103,10 @@ $ .claude/hooks/cc-update.sh v0.1.0
 ---
 ## ディレクトリ構成
 ```text
-.claude/commands      # cc-* コマンド Markdown 仕様書
-.claude/hooks         # Git/Claude 用フック
+.claude/commands      # テンプレート側コマンド
+.claude/hooks         # テンプレート側フック
+cc-commands           # 実働コマンド (ユーザーカスタム可)
+cc-hooks              # 実働フック (Git hooksPath 指定)
 .kiroflow/NOTE        # 作業メモ・ハンドオフ
 ```
 
@@ -150,15 +152,15 @@ Claude Code Flow は AI に
  sh .claude/hooks/bootstrap.sh
 
 # 2. Update template to latest (non-interactive)
- .claude/hooks/cc-update.sh -y
+ cc-hooks/cc-update.sh -y
 ```
 
 ## 🔄 セルフアップデータ (`cc-update`)
 | 用途 | コマンド例 |
 |------|------------|
-| 最新版へ自動更新 (非対話) | `.claude/hooks/cc-update.sh -y` |
-| 特定タグへ固定 | `.claude/hooks/cc-update.sh v0.1.0` |
-| ローカルステージのみで検証 | `SKIP_FETCH=true .claude/hooks/cc-update.sh` |
+| 最新版へ自動更新 (非対話) | `cc-hooks/cc-update.sh -y` |
+| 特定タグへ固定 | `cc-hooks/cc-update.sh v0.1.0` |
+| ローカルステージのみで検証 | `SKIP_FETCH=true cc-hooks/cc-update.sh` |
 
 ### オプション一覧
 | オプション | 説明 |
