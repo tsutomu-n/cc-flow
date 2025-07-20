@@ -47,7 +47,7 @@ detect_tool() {
     local binary_name="$4"
 
     local executable_path
-    executable_path=$(command -v "$binary_name" 2>/dev/null || true)
+    executable_path=$(command -v "$binary_name" 2>/dev/null)
 
     if [ -n "$executable_path" ]; then
         # Modern tool found

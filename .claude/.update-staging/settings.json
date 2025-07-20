@@ -1,0 +1,87 @@
+{
+    // Defines the workflow version. The /cc-update command can use this to determine future updates.
+    "env": {
+      "CLAUDE_TEMPLATE_VERSION": "0.0"
+    },
+  
+    // ---- Hooks: The nervous system that defines the AI's autonomous behavior ----
+    "hooks": {
+  
+      // [Trigger]: Immediately after the user submits a prompt.
+      // [Purpose]: To initiate the self-install process if the workflow is not yet installed.
+      "UserPromptSubmit": [
+        {
+          "hooks": [
+            {
+              "type": "command",
+              "command": "sh .claude/hooks/bootstrap.sh"
+            }
+          ]
+        }
+      ],
+  
+      // [Trigger]: Just before the AI writes to a file.
+      // [Purpose]: To ensure code quality (lint-checker) and protect critical files (protect-rules).
+      "PreToolUse": [
+        {
+          "matcher": "Write|Edit|MultiEdit",
+          "hooks": [
+            {
+              "type": "command",
+              "command": "sh .claude/hooks/lint-checker.sh"
+            },
+            {
+              "type": "command",
+              "command": "sh .claude/hooks/protect-rules.sh"
+            }
+          ]
+        }
+      ],
+  
+      // [Trigger]: Immediately after the AI writes to a file.
+      // [Purpose]: To automatically record the AI's changes into the Git history.
+      "PostToolUse": [
+        {
+          "matcher": "Edit|Write|MultiEdit",
+          "hooks": [
+            {
+              "type": "command",
+              "command": "sh .claude/hooks/auto-commit.sh"
+            }
+          ]
+        }
+      ]
+    },
+  
+    // ---- Permissions: The set of permissions required for the hooks to operate safely ----
+    "permissions": {
+      "allow": [
+        // Allows the execution of all shell scripts within our trusted hooks directory.
+        "Bash(sh .claude/hooks/*.sh)",
+        
+        // Required for our hook scripts to use Git and basic UNIX tools.
+        "Bash(git * *)",
+        "Bash(awk:*)",
+        "Bash(grep:*)",
+        "Bash(sed:*)",
+        "Bash(cat:*)",
+        "Bash(date:*)",
+        "Bash(basename:*)",
+        "Bash(dirname:*)",
+        "Bash(cut:*)",
+        "Bash(printf:*)"
+      ],
+      "deny": [
+        // Prevents unintentional web access to enhance security.
+        "WebFetch",
+        "Bash(curl:*)",
+        "Bash(wget:*)",
+        "Bash(scp:*)",
+        "Bash(rsync:*)",
+        "Bash(ssh:*)",
+        "Bash(ftp:*)",
+        "Bash(rm:*)",
+        "Bash(mv:*)"
+      ]
+    }
+  }
