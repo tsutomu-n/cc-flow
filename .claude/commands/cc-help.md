@@ -37,6 +37,7 @@ You MUST NOT simply display a static document. Instead, you MUST provide a helpf
 -   **`/cc-session-stop`**: Ends the day.
 -   **`/cc-task-done`**: Logs a completed task.
 -   **`/cc-update`**: Updates the workflow scripts to the latest version.
+-   **`/cc-note`**: Generates a session hand-off note template under `.ccflow/NOTE/`.
 -   **`/cc-help`**: (This command) Displays this interactive guide.
 -   **`GOAL.md`**: The strategic goals file that I (the user) manage.
 -   **`.clauderc`**: The optional configuration file I use to enable/disable features.

@@ -107,7 +107,7 @@ $ cc-hooks/cc-update.sh v0.1.0
 .claude/hooks         # テンプレート側フック
 cc-commands           # 実働コマンド (ユーザーカスタム可)
 cc-hooks              # 実働フック (Git hooksPath 指定)
-.kiroflow/NOTE        # 作業メモ・ハンドオフ
+.ccflow/NOTE        # 作業メモ・ハンドオフ
 ```
 
 ---
@@ -240,7 +240,7 @@ These tools are **auto-detected** by `hooks/detect-tools.sh` to enhance speed an
 ```
 .claude/commands      # /cc-* コマンド仕様書
 .claude/hooks         # Git / Claude Code フック
-.kiroflow/NOTE        # ハンドオフ・メモ
+.ccflow/NOTE        # ハンドオフ・メモ
 ```
 
 ## 🤝 コントリビュート方法

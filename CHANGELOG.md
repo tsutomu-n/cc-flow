@@ -17,7 +17,7 @@ All notable changes to this project will be documented in this file following th
 - `cc-update` self-updater script with colorized diff summary and non-interactive mode.
 - Optional modern tool detection (`detect-tools.sh`).
 - Git hooks for auto-commit, lint checking, protect rules, link checking.
-- Session handoff note template specification under `.kiroflow/NOTE/`.
+- Session handoff note template specification under `.ccflow/NOTE/`.
 
 ### Changed
 - Reorganization of template vs runtime directories.
