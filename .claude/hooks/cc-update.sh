@@ -31,7 +31,9 @@ PROJECT_ROOT="$(pwd)"
 CLAUDE_DIR="${PROJECT_ROOT}/.claude"
 SETTINGS_JSON="${CLAUDE_DIR}/settings.json"
 STAGING_DIR="${CLAUDE_DIR}/.update-staging"
-UPSTREAM_REPO="https://raw.githubusercontent.com/anthropics/claude-code-flow/main"
+# Upstream repository (raw and archive base)
+UPSTREAM_REPO="https://raw.githubusercontent.com/tsutomu-n/cc-flow/main"
+TAR_REPO="https://github.com/tsutomu-n/cc-flow"
 
 # Ensure jq exists
 # Helper: extract version even in JSON with comments
@@ -58,7 +60,7 @@ fetch_latest_version() {
 fetch_upstream_archive() {
     log "Fetching Claude Code Flow ${latest_ver} …"
     mkdir -p "$STAGING_DIR"
-    tarball_url="https://github.com/anthropics/claude-code-flow/archive/refs/tags/${latest_ver}.tar.gz"
+    tarball_url="${TAR_REPO}/archive/refs/tags/${latest_ver}.tar.gz"
     if command -v "$CURL" >/dev/null 2>&1; then
         "$CURL" -fsSL "$tarball_url" | tar -xz -C "$STAGING_DIR" --strip-components=1 .claude
     else
