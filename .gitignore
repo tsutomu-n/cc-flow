@@ -7,8 +7,9 @@
 .update-staging/
 **/.update-staging/
 
-# Kiroflow generated handoff notes (kept in repo if needed, comment out to include)
-# .kiroflow/NOTE/
+# Kiroflow workspace data
+.kiroflow/
+
 
 # Logs
 *.log
