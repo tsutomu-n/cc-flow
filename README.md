@@ -2,7 +2,30 @@
 
 > Git hooks & AI scripts to streamline development. Keep your local workflow template up to date with a single command.
 
-## 🚀 Quick Start
+---
+## Claude Code Flow：目的と背景
+
+### 背景
+公式の Claude Code は強力ですが、そのままでは**毎回入力した指示を忘れがち**で、AI が「何をしたか」もプロジェクト履歴に残りませんでした。
+
+### 目的
+Claude Code Flow は AI に
+
+- **プロジェクトのルールや文脈を保持する脳 — `GOAL.md`**
+- **作業を漏れなく記録する手 — `auto-commit` Git フック**
+
+を与え、あなたの開発サイクルに常駐する“専属メンバー”へと進化させます。
+
+これにより、
+- 毎朝「昨日の続きから」とだけ伝えれば、AI は文脈を完全に復元
+- ルール違反を自動で検知・修正し、品質を維持
+- すべての変更が自動コミットされ、議事録いらず
+
+という体験を実現します。
+
+---
+
+## 🚀 クイックスタート
 ```bash
 # 1. Clone & bootstrap
  git clone https://github.com/tsutomu-n/cc-flow.git && cd cc-flow
@@ -12,7 +35,7 @@
  .claude/hooks/cc-update.sh -y
 ```
 
-## 🔄 Self-Updater (`cc-update`)
+## 🔄 セルフアップデータ (`cc-update`)
 | 用途 | コマンド例 |
 |------|------------|
 | 最新版へ自動更新 (非対話) | `.claude/hooks/cc-update.sh -y` |
@@ -33,18 +56,18 @@ M  変更 (黄)
 D  削除 (赤)
 ```
 
-### FAQ
+### よくある質問
 - **Q: バリデーションに失敗すると?**  → 非 0 で終了し、ファイルは変更されません。
 - **Q: タグが無いリポジトリでは?**  → 自動で `main` ブランチのアーカイブを取得します。
 
-## ✨ Features
+## ✨ 主な機能
 - **Git Hooks 自動整形** – `lint-checker.sh` が PR 前にコードを整形し、品質を一定に保つ。
 - **AI アシスト** – `/cc-help` や `/edit` で ChatGPT 風の支援を受けながらコーディング。
 - **Self-Updater** – `cc-update` でテンプレートを常に最新状態へ。
 - **Auto Commit** – `auto-commit.sh` が作業ごとに粒度の細かいコミットを自動生成。
 - **Protect Rules** – 機密情報 push をブロックし、セキュリティを担保。
 
-## 🛠 Prerequisites & Install
+## 🛠 前提条件とインストール
 | ツール | バージョン | 入手方法 |
 |-------|-----------|---------|
 | bash  | ≥ 3.2 | macOS / Linux 標準 |
@@ -52,7 +75,7 @@ D  削除 (赤)
 | curl *or* wget | 最新 | ネットワーク転送 |
 | jq    | ≥ 1.6 | JSON 操作ツール |
 
-### Optional Modern Tools (auto-detected)
+### 任意の高速ツール (自動検出)
 These tools are **auto-detected** by `hooks/detect-tools.sh` to enhance speed and UX.  無ければ標準コマンドへフォールバックします。
 | ツール | 役割 |
 |-------|------|
@@ -71,7 +94,7 @@ These tools are **auto-detected** by `hooks/detect-tools.sh` to enhance speed an
  sh .claude/hooks/bootstrap.sh
 ```
 
-## 🔁 Daily Workflow
+## 🔁 1日の開発ワークフロー
 ```
 /cc-session-start  →  コーディング / 編集 (/edit コマンドなど)
       ↓                         ↓
@@ -80,7 +103,7 @@ These tools are **auto-detected** by `hooks/detect-tools.sh` to enhance speed an
 /cc-session-stop   (1 日の作業を終了)
 ```
 
-## ⚙️ Configuration (`.clauderc`)
+## ⚙️ 設定 (`.clauderc`)
 `.clauderc` をプロジェクトルートに置くことで機能の有効/無効を制御できます。
 ```jsonc
 {
@@ -100,10 +123,10 @@ These tools are **auto-detected** by `hooks/detect-tools.sh` to enhance speed an
 .kiroflow/NOTE        # ハンドオフ・メモ
 ```
 
-## 🤝 Contributing
+## 🤝 コントリビュート方法
 1. Fork リポジトリ
 2. `feat/<topic>` ブランチを作成
 3. PR と併せて CHANGELOG を更新
 
-## 📜 License
+## 📜 ライセンス
 MIT
