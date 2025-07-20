@@ -14,6 +14,15 @@ JQ=${JQ_CMD:-${JSON_CMD:-${CCF_JQ:-jq}}}
 CURL=${CCF_CURL:-curl}
 WGET=${CCF_WGET:-wget}
 
+# --- Global flags ------------------------------------------------------------
+YES_MODE=false
+
+# ANSI color codes for summary
+CLR_GREEN='\033[32m'
+CLR_YELLOW='\033[33m'
+CLR_RED='\033[31m'
+CLR_RESET='\033[0m'
+
 err() { printf "\033[31m[cc-update] %s\033[0m\n" "$1" >&2; }
 log() { printf "[cc-update] %s\n" "$1"; }
 
@@ -85,13 +94,24 @@ compare_and_summarise() {
     done < <(find "$CLAUDE_DIR" -type f -print0)
 
     log "\nChange summary:\n----------------"
-    cat "$summary_file"
-    printf '\nProceed with update? [y/N]: '
-    read -r ans
-    case "$ans" in
-        y|Y) ;;
-        *) err "Update aborted by user"; exit 1;;
-    esac
+    while read -r status path; do
+        case "$status" in
+            A) printf "${CLR_GREEN}A %s${CLR_RESET}\n" "$path" ;;
+            M) printf "${CLR_YELLOW}M %s${CLR_RESET}\n" "$path" ;;
+            D) printf "${CLR_RED}D %s${CLR_RESET}\n" "$path" ;;
+        esac
+    done < "$summary_file"
+
+    if [ "$YES_MODE" = true ]; then
+        log "YES mode active — proceeding automatically."
+    else
+        printf '\nProceed with update? [y/N]: '
+        read -r ans
+        case "$ans" in
+            y|Y) ;;
+            *) err "Update aborted by user"; exit 1;;
+        esac
+    fi
 }
 
 apply_update() {
@@ -124,6 +144,16 @@ fetch_archive() {
 }
 
 main() {
+    # --- Parse arguments ----------------------------------------------------
+    version_arg=""
+    for arg in "$@"; do
+        case "$arg" in
+            -y|--yes) YES_MODE=true ;;
+            *) version_arg="$arg" ;;
+        esac
+    done
+    [ -n "$version_arg" ] && latest_ver=$(printf '%s' "$version_arg" | tr -d '\n\r ')
+
     fetch_latest_version
     [ "$curr_ver" = "$latest_ver" ] && { log "Already on latest version ($curr_ver)."; exit 0; }
     log "Current version: $curr_ver, Target version: $latest_ver"
