@@ -52,6 +52,17 @@ D  削除 (赤)
 | curl *or* wget | 最新 | ネットワーク転送 |
 | jq    | ≥ 1.6 | JSON 操作ツール |
 
+### Optional Modern Tools (auto-detected)
+These tools are **auto-detected** by `hooks/detect-tools.sh` to enhance speed and UX.  無ければ標準コマンドへフォールバックします。
+| ツール | 役割 |
+|-------|------|
+| `rg` (ripgrep) | 超高速 `grep` 代替 |
+| `fd` | 高速 `find` 代替 |
+| `bat` | カラー表示付き `cat` |
+| `sd` | `sed` 互換の高速リプレーサ |
+| `mlr` (miller) | `awk` を置き換える表形式ツール |
+| `delta` | `git diff` カラー化 |
+
 ```bash
 # 1. Clone repository
  git clone https://github.com/tsutomu-n/cc-flow.git && cd cc-flow
