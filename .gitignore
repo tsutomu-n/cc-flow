@@ -4,8 +4,7 @@
 *.swo
 
 # Claude Code Flow temporary staging
-cc-commands/
-cc-hooks/
+
 .update-staging/
 **/.update-staging/
 

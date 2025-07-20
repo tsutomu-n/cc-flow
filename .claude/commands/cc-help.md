@@ -61,10 +61,10 @@ You MUST NOT simply display a static document. Instead, you MUST provide a helpf
 **例**
 ```bash
 # 最新版へ非対話アップデート
-.claude/hooks/cc-update.sh -y
+cc-hooks/cc-update.sh -y
 
 # 特定バージョンへ固定
-.claude/hooks/cc-update.sh v0.1.0
+cc-hooks/cc-update.sh v0.1.0
 ```
 
 > バリデーションエラー時は途中で終了し、変更はロールバックされます。

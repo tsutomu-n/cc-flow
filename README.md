@@ -55,7 +55,7 @@ $ git clone https://github.com/tsutomu-n/cc-flow.git
 $ cd cc-flow
 
 # 2. ブートストラップ (フックをコピー)
-$ sh .claude/hooks/bootstrap.sh
+$ sh cc-hooks/bootstrap.sh
 ```
 
 ---
@@ -149,7 +149,7 @@ Claude Code Flow は AI に
 ```bash
 # 1. Clone & bootstrap
  git clone https://github.com/tsutomu-n/cc-flow.git && cd cc-flow
- sh .claude/hooks/bootstrap.sh
+ sh cc-hooks/bootstrap.sh
 
 # 2. Update template to latest (non-interactive)
  cc-hooks/cc-update.sh -y
@@ -211,7 +211,7 @@ These tools are **auto-detected** by `hooks/detect-tools.sh` to enhance speed an
  git clone https://github.com/tsutomu-n/cc-flow.git && cd cc-flow
 
 # 2. Bootstrap hooks & config
- sh .claude/hooks/bootstrap.sh
+ sh cc-hooks/bootstrap.sh
 ```
 
 ## 🔁 1日の開発ワークフロー

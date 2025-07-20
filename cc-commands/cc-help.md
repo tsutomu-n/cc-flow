@@ -12,7 +12,7 @@ You MUST NOT simply display a static document. Instead, you MUST provide a helpf
 
 1.  **Assess the User's Situation**:
     -   Read my optional question: `{{ARGUMENTS}}`.
-    -   If I provide no question, you must proactively assess the project state by checking for key files (e.g., `Glob GOAL.md`, `Glob .claude/workspace/logs/{{DATE}}/*`).
+    -   If I provide no question, you must proactively assess the project state by checking for key files (e.g., `Glob GOAL.md`, `Glob cc-hooks/cc-update.sh -y/logs/{{DATE}}/*`).
 
 2.  **Provide a Tailored Response**:
 
