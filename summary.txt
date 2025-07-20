@@ -1,4 +1,14 @@
-M summary.txt
+A .clauderc.template
+A summary.txt
+A hooks/detect-tools.sh
+A hooks/auto-commit.sh
+A hooks/protect-rules.sh
+A hooks/bootstrap.sh
+A hooks/cc-update.sh
+A hooks/link-checker.sh
+A commands/cc-update.md
+A commands/cc-help.md
+A settings.json
 D .claude/.clauderc.template
 D .claude/.update-staging/.clauderc.template
 D .claude/.update-staging/summary.txt

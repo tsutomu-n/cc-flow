@@ -1,0 +1,42 @@
+# -----------------------------------------------------------------------------
+#            Claude Code Flow - Workflow Configuration (.clauderc)
+# -----------------------------------------------------------------------------
+#
+# INSTRUCTIONS:
+#
+# 1. To activate, rename this file from ".clauderc.template" to ".clauderc".
+#
+# 2. Uncomment the features you wish to configure below and set their
+#    values to "true" or "false".
+#
+# 3. This file is safe to commit to your repository if you wish to share
+#    these settings with your team.
+#
+# -----------------------------------------------------------------------------
+
+
+# --- CORE AUTONOMOUS FEATURES ---
+
+# Enable the auto-commit hook, which automatically commits the AI's changes
+# to Git. This is the foundation of the workflow's traceability.
+# Recommended: "true"
+# CCF_AUTO_COMMIT_ENABLED="true"
+
+# Enable the pre-write lint checker. This allows the AI to self-correct its
+# code to meet quality standards before writing to disk.
+# Recommended: "true"
+# CCF_LINT_CHECKER_ENABLED="true"
+
+# Enable protection for critical project files (e.g., GOAL.md, package.json).
+# This prevents the AI from accidentally modifying core project rules.
+# Recommended: "true"
+# CCF_PROTECT_RULES_ENABLED="true"
+
+
+# --- ADVANCED DEBUGGING ---
+
+# Enable detailed, verbose logging for all hook scripts. When set to "true",
+# log files will be created in your system's temporary directory (e.g., /tmp/),
+# which can help diagnose unexpected behavior.
+# Default: "false"
+# CCF_DEBUG="false"
