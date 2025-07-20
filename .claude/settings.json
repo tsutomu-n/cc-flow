@@ -1,7 +1,7 @@
 {
     // Defines the workflow version. The /cc-update command can use this to determine future updates.
     "env": {
-      "CLAUDE_TEMPLATE_VERSION": "0.0"
+      "CLAUDE_TEMPLATE_VERSION": "-y"
     },
   
     // ---- Hooks: The nervous system that defines the AI's autonomous behavior ----
