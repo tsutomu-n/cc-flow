@@ -42,4 +42,31 @@ You MUST NOT simply display a static document. Instead, you MUST provide a helpf
 -   **`.clauderc`**: The optional configuration file I use to enable/disable features.
 -   **Hooks**: The autonomous scripts (`lint-checker.sh`, `auto-commit.sh`, etc.) that ensure quality and record-keeping.
 
+---
+
+### `/cc-update` — Self-Updater
+
+```
+/cc-update [<version>] [-y|--yes]
+```
+
+| 引数/オプション | 説明 |
+|----------------|------|
+| `<version>`    | 更新先のタグ名。省略時は upstream の `VERSION` を参照し、見つからなければ `main` ブランチへフォールバック。 |
+| `-y, --yes`    | すべてのプロンプトを自動で *Yes* にして非対話で実行。CI/CD や定期ジョブ向け。 |
+| `SKIP_FETCH=true` | 環境変数。リモートからの取得をスキップし、ローカル `.update-staging/` の内容のみで検証。 |
+
+**色付きサマリ**: `A` 追加 (緑) / `M` 変更 (黄) / `D` 削除 (赤)
+
+**例**
+```bash
+# 最新版へ非対話アップデート
+.claude/hooks/cc-update.sh -y
+
+# 特定バージョンへ固定
+.claude/hooks/cc-update.sh v0.1.0
+```
+
+> バリデーションエラー時は途中で終了し、変更はロールバックされます。
+
 Now, respond to my request. Be the helpful, interactive expert.
