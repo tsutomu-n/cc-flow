@@ -54,17 +54,26 @@ fetch_latest_version() {
     else
         err "curl or wget required to fetch latest version"; exit 1;
     fi
-    [ -z "$latest_ver" ] && { err "Unable to determine latest version"; exit 1; }
+    if [ -z "$latest_ver" ]; then
+        log "VERSION file unavailable — falling back to main branch archive."
+        latest_ver="main"
+    fi
 }
 
 fetch_upstream_archive() {
     log "Fetching Claude Code Flow ${latest_ver} …"
     mkdir -p "$STAGING_DIR"
-    tarball_url="${TAR_REPO}/archive/refs/tags/${latest_ver}.tar.gz"
-    if command -v "$CURL" >/dev/null 2>&1; then
-        "$CURL" -fsSL "$tarball_url" | tar -xz -C "$STAGING_DIR" --strip-components=1 .claude
+    if [ "$latest_ver" = "main" ]; then
+        tarball_url="${TAR_REPO}/archive/refs/heads/main.tar.gz"
+        extract_cmd=(tar -xz -C "$STAGING_DIR" --strip-components=2 --wildcards '*/.claude/*')
     else
-        "$WGET" -qO- "$tarball_url" | tar -xz -C "$STAGING_DIR" --strip-components=1 .claude
+        tarball_url="${TAR_REPO}/archive/refs/tags/${latest_ver}.tar.gz"
+        extract_cmd=(tar -xz -C "$STAGING_DIR" --strip-components=1 .claude)
+    fi
+    if command -v "$CURL" >/dev/null 2>&1; then
+        "$CURL" -fsSL "$tarball_url" | "${extract_cmd[@]}"
+    else
+        "$WGET" -qO- "$tarball_url" | "${extract_cmd[@]}"
     fi
 }
 
@@ -126,9 +135,10 @@ apply_update() {
         cp "$f" "$dest"
     done < <(find "$STAGING_DIR" -type f -print0)
 
-    # Update version in settings.json
-    # inline update CLAUDE_TEMPLATE_VERSION
-    sed -i -E 's/"CLAUDE_TEMPLATE_VERSION": *"[0-9.]+"/"CLAUDE_TEMPLATE_VERSION": "'"$latest_ver"'"/' "$SETTINGS_JSON"
+    # Update version in settings.json only when latest_ver is a tag
+    if [[ "$latest_ver" != "main" ]]; then
+        sed -i -E 's/"CLAUDE_TEMPLATE_VERSION": *"[0-9.]+"/"CLAUDE_TEMPLATE_VERSION": "'"$latest_ver"'"/' "$SETTINGS_JSON"
+    fi
 
     # Stage changes and commit
     git add .claude
