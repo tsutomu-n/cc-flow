@@ -35,7 +35,7 @@ Below is the full timeline of a typical day. Each step links to the exact comman
 | 2 | `/cc-session-start` | Loads yesterday summary, `GOAL.md`, last commits, and proposes today tasks. |
 | 3 | `/cc-edit` (`/edit` alias) | Ask Claude to modify code. Behind the scenes it triggers `git add` → staged diff preview → AI edit. |
 | 4 | `/cc-task-done` | Writes a bullet entry in `CHANGELOG.md`, auto-formats, commits with conventional message. |
-| 5 | `/cc-session-stop` | Generates hand-off note via `cc-note.sh`. Pushes if branch clean. |
+| 5 | `/cc-session-stop` | Summarizes work, writes hand-off note via `cc-note.sh`, auto-pushes if branch clean. |
 
 <details>
 <summary>Script call graph</summary>
@@ -57,7 +57,7 @@ cc-session-start
 | `/cc-session-start` | `--yes` | Start day, preload context. |
 | `/cc-edit` (`/edit` alias) | `"prompt"` | Ask Claude to change code. |
 | `/cc-task-done` | (none) | Mark task complete, auto commit. |
-| `/cc-session-stop` | (none) | End session, write note. |
+| `/cc-session-stop` | (none) | End session, write note, auto push. |
 
 ### Maintenance
 | Command | Flags | Description |
