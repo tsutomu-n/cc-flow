@@ -52,7 +52,7 @@ cc-hooks/cc-update.sh v0.1.0
 | Command | Purpose |
 |---------|---------|
 | `/cc-session-start` | Load yesterday’s context and suggest today’s plan |
-| `/edit`            | Ask AI to edit / create code |
+| `/edit`            | Ask Claude Code to edit / create code |
 | `/cc-task-done`    | Log finished task and auto-commit |
 | `/cc-session-stop` | Wrap up the day, generate hand-off note |
 | `/cc-note`         | Manually create a note (`--full` or `--config`) |
@@ -87,7 +87,7 @@ Enables / disables core hooks at runtime. Example:
 
 ## 6. Directory Layout
 ```text
-.claude/commands    # AI prompt specs (LLM only)
+.claude/commands    # Slash-command descriptors read by Claude Code
 cc-commands/        # Human-readable command help
 cc-hooks/           # Git / daily workflow hooks and scripts
 .ccflow/NOTE/       # Generated hand-off notes (git-ignored)
