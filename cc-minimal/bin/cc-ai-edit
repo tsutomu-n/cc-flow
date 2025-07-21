@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# cc-ai-edit — invoke Claude Code to refactor or fix a file diff
+# Usage: cc-ai-edit <file> [slash-command]
+# Default slash-command is /ai-edit (Claude Code CLI)
+set -euo pipefail
+
+FILE=${1:-}
+SLASH=${2:-/ai-edit}
+
+if [[ -z "$FILE" ]]; then
+  echo "Usage: cc-ai-edit <file> [/ai-edit|/review|...]" >&2
+  exit 1
+fi
+
+if ! command -v claude >/dev/null 2>&1; then
+  echo "cc-ai-edit: 'claude' CLI not found. Install Claude Code and ensure it is in PATH." >&2
+  exit 1
+fi
+
+# Generate zero-context diff for the file (only modified lines) or fallback to full file
+DIFF=$(git diff -U0 -- "$FILE" || true)
+
+if [[ -z "$DIFF" ]]; then
+  echo "No local changes detected in $FILE. Sending entire file to Claude Code..." >&2
+  cat "$FILE" | claude code "$SLASH" --filename "$FILE"
+else
+  echo "$DIFF" | claude code "$SLASH" --patch
+fi
+
+echo "cc-ai-edit: Claude Code interaction complete. Review applied patch and commit as needed."

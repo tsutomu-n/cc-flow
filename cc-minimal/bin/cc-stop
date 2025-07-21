@@ -4,6 +4,9 @@ set -euo pipefail
 
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
+# Generate daily note before pushing
+"$(dirname "$0")/cc-note"
+
 echo "Pushing $BRANCH ..."
 if git push -u origin "$BRANCH"; then
   echo "Branch pushed. Session complete."
