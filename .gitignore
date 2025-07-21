@@ -63,4 +63,4 @@ desktop.ini
 # Log files, temporary files, etc.
 *.log
 *.tmp
-*.temp
+*.temp/.claude/commands/
