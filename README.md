@@ -50,7 +50,52 @@ The AI proposes tasks, auto-formats code, and commits through Git hooks.
 
 ---
 
-## 3. Installation
+## 3. Getting Started: Installation
+
+Below are three common ways to bring Claude Code Flow into your project. For full walk-throughs see **[docs/guide.md → Installation Options](docs/guide.md#installation-options)**.
+
+<details>
+<summary><strong>Option A – New Project (recommended)</strong></summary>
+
+```bash
+# 1. Create a repo from the GitHub template UI
+# 2. Then locally:
+git clone https://github.com/<you>/<new-project>.git
+cd <new-project>
+./bootstrap.sh   # one-time setup
+claude           # open chat, then
+> /cc-session-start
+```
+</details>
+
+<details>
+<summary><strong>Option B – Clone This Repo</strong></summary>
+
+```bash
+git clone https://github.com/tsutomu-n/cc-flow.git
+cd cc-flow
+# (optional) scrub history for a fresh start	rm -rf .git && git init && git add . && git commit -m "Initial commit"
+./bootstrap.sh
+```
+You now have the workflow’s own history; ideal for hacking on CCF itself.
+</details>
+
+<details>
+<summary><strong>Option C – Add to Existing Project</strong></summary>
+
+```bash
+# from your repo root
+curl -L https://github.com/tsutomu-n/cc-flow/archive/main.zip -o ccf.zip
+unzip ccf.zip -d ccf-tmp && rm ccf.zip
+cp -r ccf-tmp/cc-flow-main/{cc-hooks,cc-commands,settings.json,.clauderc.template,bootstrap.sh} .
+cat ccf-tmp/cc-flow-main/.gitignore >> .gitignore
+rm -rf ccf-tmp
+./bootstrap.sh
+```
+</details>
+
+---
+
 
 You can install Claude Code Flow in two ways.
 
