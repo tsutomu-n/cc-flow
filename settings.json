@@ -6,9 +6,18 @@
   
     // ---- Hooks: The nervous system that defines the AI's autonomous behavior ----
     "hooks": {
-      // "UserPromptSubmit" Hook IS INTENTIONALLY REMOVED.
-      // Installation is now handled by the manual ./bootstrap.sh script
-      // to provide a more explicit and controllable user experience.
+      // [Trigger]: Immediately after the user submits the very first prompt.
+      // [Purpose]: Optionally run automatic bootstrap when the project opts-in.
+      "UserPromptSubmit": [
+        {
+          "hooks": [
+            {
+              "type": "command",
+              "command": "sh .claude/hooks/bootstrap.sh"
+            }
+          ]
+        }
+      ],
   
       // [Trigger]: Just before the AI writes to a file.
       // [Purpose]: To ensure code quality (lint-checker) and protect critical files (protect-rules).
