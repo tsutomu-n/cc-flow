@@ -27,7 +27,7 @@ You MUST NOT simply display a static document. Instead, you MUST provide a helpf
         -   *Example if `GOAL.md` is missing*: "It appears the project hasn't been fully initialized yet. You should run `/cc-project-init` to set up the `GOAL.md` file and other necessary components."
 
     -   **If I ask for a general overview**:
-        -   Provide a brief, bulleted summary of the core daily commands (`/cc-session-start`, `/edit`, `/cc-task-done`, `/cc-session-stop`).
+        -   Provide a brief, bulleted summary of the core daily commands (`/cc-session-start`, `/cc-edit` (`/edit` alias), `/cc-task-done`, `/cc-session-stop`).
         -   Do not overwhelm me with details unless I ask for them.
 
 ## Your Core Knowledge Base (For Reference)

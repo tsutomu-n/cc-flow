@@ -33,7 +33,7 @@ Below is the full timeline of a typical day. Each step links to the exact comman
 |------|------------------|-------------|
 | 1 | `bootstrap.sh` (once) | Installs hooks under `cc-hooks/` and symlinks commands. |
 | 2 | `/cc-session-start` | Loads yesterday summary, `GOAL.md`, last commits, and proposes today tasks. |
-| 3 | `/edit` | Ask Claude to modify code. Behind the scenes it triggers `git add` → staged diff preview → AI edit. |
+| 3 | `/cc-edit` (`/edit` alias) | Ask Claude to modify code. Behind the scenes it triggers `git add` → staged diff preview → AI edit. |
 | 4 | `/cc-task-done` | Writes a bullet entry in `CHANGELOG.md`, auto-formats, commits with conventional message. |
 | 5 | `/cc-session-stop` | Generates hand-off note via `cc-note.sh`. Pushes if branch clean. |
 
@@ -55,7 +55,7 @@ cc-session-start
 | Command | Flags | Description |
 |---------|-------|-------------|
 | `/cc-session-start` | `--yes` | Start day, preload context. |
-| `/edit` | `"prompt"` | Ask Claude to change code. |
+| `/cc-edit` (`/edit` alias) | `"prompt"` | Ask Claude to change code. |
 | `/cc-task-done` | (none) | Mark task complete, auto commit. |
 | `/cc-session-stop` | (none) | End session, write note. |
 
@@ -99,8 +99,8 @@ Each hook prints colored output and exits non-zero on failure.
 ## Troubleshooting
 | Symptom | Cause | Fix |
 |---------|-------|-----|
-| "SAFETY_GATE: Action blocked" | Trying to edit protected file | Add to allowed list or modify manually. |
-| Note generation empty | Missing `yq` | Install `yq` or edit config manually. |
+| "SAFETY_GATE: Action blocked" | Trying to /cc-edit protected file | Add to allowed list or modify manually. |
+| Note generation empty | Missing `yq` | Install `yq` or /cc-edit config manually. |
 
 ---
 

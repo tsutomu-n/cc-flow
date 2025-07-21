@@ -24,7 +24,7 @@ It automates the boring parts (formatting, commit messages, note templates) so y
 /cc-session-start   # AI loads GOAL.md & yesterday summary
 
 # 3. Work as usual
-/edit "Implement feature X"
+/cc-edit "Implement feature X"
 /cc-task-done       # mark task finished (auto commit)
 
 # 4. End of day
@@ -52,7 +52,7 @@ cc-hooks/cc-update.sh v0.1.0
 | Command | Purpose |
 |---------|---------|
 | `/cc-session-start` | Load yesterday’s context and suggest today’s plan |
-| `/edit`            | Ask Claude Code to edit / create code |
+| `/cc-edit` (`/edit` alias) | Ask Claude Code to edit / create code |
 | `/cc-task-done`    | Log finished task and auto-commit |
 | `/cc-session-stop` | Wrap up the day, generate hand-off note |
 | `/cc-note`         | Manually create a note (`--full` or `--config`) |
