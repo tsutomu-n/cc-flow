@@ -89,7 +89,15 @@ Common keys:
 | `ci.badge_url` | CI status badge URL |
 See comments inside `config.example` for full list.
 
-### `.clauderc`
+### `.clauderc` (generated as `.clauderc.template`)
+Shell-style toggles that enable / disable core hooks at runtime. Rename the template and edit values:
+```bash
+# .clauderc
+CCF_AUTO_COMMIT_ENABLED="true"   # auto commit & push
+CCF_LINT_CHECKER_ENABLED="true"  # ruff/ shellcheck before write
+CCF_PROTECT_RULES_ENABLED="true" # protect GOAL.md & critical files
+# CCF_DEBUG="false"              # verbose hook logging
+```
 Enables / disables core hooks at runtime. Example:
 ```jsonc
 {
@@ -103,7 +111,9 @@ Enables / disables core hooks at runtime. Example:
 
 ## 6. Directory Layout
 ```text
-.claude/commands    # Slash-command descriptors read by Claude Code
+bootstrap.sh           # one-time installer (creates symlinks)
+.clauderc.template    # copy/rename to .clauderc for hook toggles
+.claude/commands       # Slash-command descriptors read by Claude Code
 cc-commands/        # Human-readable command help
 cc-hooks/           # Git / daily workflow hooks and scripts
 .ccflow/NOTE/       # Generated hand-off notes (git-ignored)

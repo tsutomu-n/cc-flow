@@ -42,7 +42,7 @@ Below is the full timeline of a typical day. Each step links to the exact comman
 
 ```text
 cc-session-start
-└─ hooks/detect-tools.sh (optional)
+└─ cc-hooks/detect-tools.sh (optional)
    └─ cc-note.sh --summary (yesterday context)
 ```
 
@@ -78,7 +78,15 @@ See comments in `config.example`. Full list reproduced here:
 | `ci.badge_url` | string | "" | Badge image for README / notes. |
 | ... | ... | ... | ... |
 
-### `.clauderc`
+### `.clauderc` (generated as `.clauderc.template`)
+Rename the template and flip switches as needed:
+```bash
+# .clauderc
+CCF_AUTO_COMMIT_ENABLED="true"
+CCF_LINT_CHECKER_ENABLED="true"
+CCF_PROTECT_RULES_ENABLED="true"
+# CCF_DEBUG="false"
+```
 User-level toggles – read at runtime by hooks.
 
 ---
