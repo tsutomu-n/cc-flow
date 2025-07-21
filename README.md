@@ -33,18 +33,23 @@ CCF は **Claude Code と並走するためのシェルツール集**です。�
 
 ## 2. Quick Start
 ```bash
-# 1. Clone your repo and run bootstrap once
-./bootstrap.sh
+# 1. One-time bootstrap right after cloning
+./bootstrap.sh              # generates core files via decision:"write"
+git add . && git commit -m "bootstrap"
 
-# 2. Every morning
-/cc-session-start   # AI loads GOAL.md & yesterday summary
+# 2. (Optional) enable custom settings
+tcp .clauderc.template .clauderc
+# turn flags on/off (auto-commit, lint checker, protect rules...)
 
-# 3. Work as usual
+# 3. Start your day
+/cc-session-start           # loads GOAL.md + yesterday summary
+
+# 4. Work loop
 /cc-edit "Implement feature X"
-/cc-task-done       # mark task finished (auto commit)
+/cc-task-done               # mark task finished (auto commit)
 
-# 4. End of day
-/cc-session-stop
+# 5. End of day
+/cc-session-stop            # summary + auto push
 ```
 The AI proposes tasks, auto-formats code, and commits through Git hooks.
 
