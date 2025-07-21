@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# cc-done — mark task done & auto commit
+set -euo pipefail
+TASK=${1:-}
+if [ -z "$TASK" ]; then
+  echo "Usage: cc-done <task-description>" >&2
+  exit 1
+fi
+
+gsed() { sed "$@"; } 2>/dev/null || true
+# replace first unchecked box
+if command -v gsed >/dev/null; then SED=gsed; else SED=sed; fi
+$SED -i "0,/^- \[ \] $TASK/{s//- [x] $TASK/}" TODO.md
+
+git add TODO.md
+if git diff --cached --quiet; then
+  echo "No changes detected in TODO.md"; exit 0; fi
+
+git commit -m "feat: mark '$TASK' done"

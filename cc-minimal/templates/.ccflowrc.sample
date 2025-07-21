@@ -1,0 +1,8 @@
+[core]
+auto_commit = true
+commit_threshold = 2
+
+[lint]
+python = ruff
+javascript = eslint
+shell = shellcheck

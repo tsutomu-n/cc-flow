@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# cc-note — generate daily handoff note
+set -euo pipefail
+
+DATE=$(date +%F_%H-%M)
+NOTE_DIR=.ccflow/NOTE
+mkdir -p "$NOTE_DIR"
+NOTE_FILE="$NOTE_DIR/NOTE_${DATE}.md"
+
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+LATEST_COMMIT=$(git log -1 --pretty=format:'%h %s')
+
+echo "# Daily Note ($DATE)" > "$NOTE_FILE"
+echo "* Branch: $BRANCH" >> "$NOTE_FILE"
+echo "* Latest commit: $LATEST_COMMIT" >> "$NOTE_FILE"
+echo -e "\n## Done" >> "$NOTE_FILE"
+grep "^- \[x\]" TODO.md || echo "(none)" >> "$NOTE_FILE"
+echo -e "\n## Next" >> "$NOTE_FILE"
+grep "^- \[ \]" TODO.md || echo "(none)" >> "$NOTE_FILE"
+
+echo "Generated $NOTE_FILE"

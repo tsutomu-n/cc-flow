@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# cc-stop — push branch and finish session
+set -euo pipefail
+
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+echo "Pushing $BRANCH ..."
+if git push -u origin "$BRANCH"; then
+  echo "Branch pushed. Session complete."
+else
+  echo "Push failed — resolve issues manually." >&2
+fi
