@@ -23,12 +23,15 @@
 
 # The project's strategic goal document, created by /cc-project-init.
 # This is specific to the project, not part of the template itself.
-GOAL.md
+# project strategic goal (tracked)
+!GOAL.md
+
 AIM.md
 MISSION.md
 
 # The user's dynamic scratchpad.
-.claude/NOTEBOOK.md
+# user scratch notebook (tracked)
+!.claude/NOTEBOOK.md
 
 # The user's local workflow configuration.
 # The template (.clauderc.template) IS tracked, but the user's actual
@@ -63,4 +66,9 @@ desktop.ini
 # Log files, temporary files, etc.
 *.log
 *.tmp
-/.claude/commands/
+# Ignore generated command files but keep templates
+/.claude/commands/**
+!/.claude/commands/
+!/.claude/commands/cc-session-start.md
+!/.claude/commands/cc-session-stop.md
+!/.claude/commands/cc-task-done.md
