@@ -123,6 +123,14 @@ Each hook prints colored output and exits non-zero on failure.
 ---
 
 ## Troubleshooting
+
+### Bootstrap hiccups (July 2025)
+| Symptom | Cause | Fix |
+|---------|-------|-----|
+| `invalid settings.json` on first start | Comments (`//`) or trailing commas broke JSON | Remove comments > `jq . settings.json` to validate |
+| Hook blocks forever after **ASSISTANT_NOTICE** | CLI ≤ v0.56 decision:block bug | Update CLI (`npm i -g @anthropic-ai/claude-code@latest`) or run `bootstrap.sh` manually |
+| `GOAL.md` / `NOTEBOOK.md` not tracked | `.gitignore` excluded them | Add exceptions `!GOAL.md` / `!.claude/NOTEBOOK.md` in `.gitignore` |
+
 | Symptom | Cause | Fix |
 |---------|-------|-----|
 | "SAFETY_GATE: Action blocked" | Trying to /cc-edit protected file | Add to allowed list or modify manually. |
