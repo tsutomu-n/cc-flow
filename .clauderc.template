@@ -17,20 +17,24 @@
 
 # --- CORE AUTONOMOUS FEATURES ---
 
+# Automatically run bootstrap on first prompt in a fresh clone.
+# Recommended: "false" once the project is initialized.
+CCF_AUTO_BOOTSTRAP_ENABLED="false"
+
 # Enable the auto-commit hook, which automatically commits the AI's changes
 # to Git. This is the foundation of the workflow's traceability.
 # Recommended: "true"
-# CCF_AUTO_COMMIT_ENABLED="true"
+CCF_AUTO_COMMIT_ENABLED="true"
 
 # Enable the pre-write lint checker. This allows the AI to self-correct its
 # code to meet quality standards before writing to disk.
 # Recommended: "true"
-# CCF_LINT_CHECKER_ENABLED="true"
+CCF_LINT_CHECKER_ENABLED="true"
 
 # Enable protection for critical project files (e.g., GOAL.md, package.json).
 # This prevents the AI from accidentally modifying core project rules.
 # Recommended: "true"
-# CCF_PROTECT_RULES_ENABLED="true"
+CCF_PROTECT_RULES_ENABLED="true"
 
 
 # --- ADVANCED DEBUGGING ---
