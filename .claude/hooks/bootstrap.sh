@@ -104,7 +104,20 @@ After creating ALL files, output this confirmation message:
 EOF
 )
 
-printf '{"decision":"block","reason":"%s"}\n' "$(ccf_json_escape "$REASON_TO_CLAUDE")"
+# --- Decision: write ---
+cat <<WRITE_JSON
+{
+  "decision": "write",
+  "writes": [
+    {"file_path": "GOAL.md", "content": "# Project Goals\n- [ ]\n"},
+    {"file_path": ".claude/NOTEBOOK.md", "content": "# Notebook\n-\n"},
+    {"file_path": ".clauderc.template", "content": "# Claude Code Flow - Workflow Configuration (.clauderc)\n# (See documentation for details on available options)\n"},
+    {"file_path": ".claude/commands/cc-session-start.md", "content": "---\ndescription: Starts a new development session.\n---\n# (Minimal content placeholder)\n"},
+    {"file_path": ".claude/commands/cc-session-stop.md", "content": "---\ndescription: Ends the daily session.\n---\n# (Minimal content placeholder)\n"},
+    {"file_path": ".claude/commands/cc-task-done.md", "content": "---\ndescription: Logs a completed task.\n---\n# (Minimal content placeholder)\n"}
+  ]
+}
+WRITE_JSON
 
 exit 0
 
