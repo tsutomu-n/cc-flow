@@ -76,10 +76,10 @@ cat > "$FILE" <<EOF
 # セッション情報共有 - ${TS}
 
 ## 🎯 Session Summary
-- **Start Time**: <!-- 例: 2025-07-21 09:00 -->
-- **End Time**: <!-- 例: 2025-07-21 17:30 -->
-- **Environment**: <!-- bash 5.1, git 2.40 など -->
-- **Elapsed Time**: <!-- 例: 6時間30分 -->
+- **Start Time**: <!-- e.g. 2025-07-21 09:00 -->
+- **End Time**: <!-- e.g. 2025-07-21 17:30 -->
+- **Environment**: <!-- bash 5.1, git 2.40 etc. -->
+- **Elapsed Time**: <!-- e.g. 6時間30分 -->
 
 ## ✅ Completed Work
 ### [L] Low Complexity Tasks
@@ -108,8 +108,8 @@ cat > "$FILE" <<EOF
 - 
 
 ## 🗺 Project Milestone
-- **Milestone**: <!-- 例: v1.0 Alpha -->
-- **Due Date**: <!-- 例: 2025-07-31 -->
+- **Milestone**: <!-- e.g. v1.0 Alpha -->
+- **Due Date**: <!-- e.g. 2025-07-31 -->
 
 ## 🔀 Branch & Recent Commits
 - **Branch**: $(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "(unknown)")
@@ -120,13 +120,13 @@ cat > "$FILE" <<EOF
 
 ## 🗂 Project Overview
 $(if [[ $FULL_MODE == true ]]; then
-  # 抜粋: README の「背景と目的」セクション (見出し## 背景と目的 から次の --- まで)
+  # Extract: README "Background & Purpose" section (from heading to next ---)
   awk '/^## 背景と目的/{flag=1;next}/^---/{flag=0}flag' README.md | sed 's/^/- /'
 fi)
 
 ## 📂 Key Directories & Files
 $(if [[ $FULL_MODE == true ]]; then
-  awk '/^## ディレクトリ構成/{flag=1;next}/^---/{flag=0}flag' README.md
+  awk '/^## Directory Layout/{flag=1;next}/^---/{flag=0}flag' README.md
 fi)
 
 ## 🚀 Quick Start
