@@ -50,7 +50,28 @@ The AI proposes tasks, auto-formats code, and commits through Git hooks.
 
 ---
 
-## 3. Install / Update
+## 3. Installation
+
+You can install Claude Code Flow in two ways.
+
+### 3.1 Manual Install (recommended)
+Run the bootstrap script once after cloning:
+
+```bash
+./bootstrap.sh
+```
+
+### 3.2 Automatic Install (opt-in)
+Skip the manual step by adding this line to a `.clauderc` file at the project root:
+
+```bash
+CCF_AUTO_BOOTSTRAP_ENABLED="true"
+```
+When you send your first prompt to Claude, the workflow will self-install via the `UserPromptSubmit` hook.
+
+---
+
+### 3.3 Update / Rollback
 ```bash
 # Install (run once to set up hooks)
 ./bootstrap.sh
