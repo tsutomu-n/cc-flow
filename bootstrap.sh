@@ -44,6 +44,11 @@ if [ ! -f "$ROOT_DIR/.clauderc.template" ]; then
 # Enable protection for critical files.
 # CCF_PROTECT_RULES_ENABLED="true"
 
+# --- INSTALLATION ---
+# Enable automatic bootstrapping on the first prompt in a new project.
+# If set to "true", you can skip running ./bootstrap.sh manually.
+# CCF_AUTO_BOOTSTRAP_ENABLED="false"
+
 # Enable detailed debug logging.
 # CCF_DEBUG="false"
 TEMPLATE

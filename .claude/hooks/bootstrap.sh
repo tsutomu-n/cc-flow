@@ -3,6 +3,16 @@
 # Event: UserPromptSubmit
 
 # --- Configuration ---
+# Load project-level configuration (if exists)
+if [ -f ".clauderc" ]; then
+    . ./.clauderc
+fi
+
+# Exit unless user opted in to auto bootstrap
+if [ "${CCF_AUTO_BOOTSTRAP_ENABLED:-false}" != "true" ]; then
+    exit 0
+fi
+
 # The presence of this file acts as the "installation lock".
 # If this file exists, the bootstrap process will not run again.
 INSTALL_LOCK_FILE=".claude/commands/cc-session-start.md"
