@@ -4,13 +4,29 @@ _Efficient daily development assisted by AI_
 
 ---
 
-## 1. Purpose & Overview
-Claude Code Flow (CCF) is a **shell-based workflow** that lets you work side-by-side with an Claude Code.  
-It automates the boring parts (formatting, commit messages, note templates) so you can focus on code.
+## 1. Why Claude Code Flow?
+
+Tired of juggling **git, formatting, commit messages, and hand-off notes** when you just want to code?  
+_Claude Code Flow_ (CCF) is a lightweight shell toolkit that puts those chores on autopilot and turns Claude into a first-class pair-programmer.
+
+### 🚀 Key Benefits
+| &nbsp; |  |
+|---|---|
+| ⚡ **Stay in Flow** | One-liner commands handle staging, diff review, and conventional commits so you never leave your editor. |
+| 🤝 **Seamless AI Pairing** | Slash-commands feed the right context to Claude and paste back code patches. |
+| 📝 **Instant Handoff** | `/cc-session-stop` writes a structured Markdown summary ready for async teammates. |
+
+### 30-Second Daily Loop
+```text
+bootstrap.sh   # one time
+└── /cc-session-start
+    ├── (code) → /cc-edit → /cc-task-done  [repeat]
+    └── /cc-session-stop  # auto note & push
+```
 
 <details>
 <summary>日本語補足 (click)</summary>
-本ツールは Claude Code とペアプロ開発をスムーズにするための簡易スクリプト集です。日次の作業開始から終了までを一貫してサポートします。
+CCF は **Claude Code と並走するためのシェルツール集**です。1 日の開発サイクル（開始→編集→タスク完了→手仕舞い）をワンライナーで支援し、フォーマットやコミット、引き継ぎノート生成を自動化します。
 </details>
 
 ---
