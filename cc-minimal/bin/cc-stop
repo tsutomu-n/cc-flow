@@ -2,14 +2,23 @@
 # cc-stop — push branch and finish session
 set -euo pipefail
 
+# returns 0 if origin remote exists
+has_remote() {
+  git remote get-url origin &>/dev/null
+}
+
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 # Generate daily note before pushing
 "$(dirname "$0")/cc-note"
 
-echo "Pushing $BRANCH ..."
-if git push -u origin "$BRANCH"; then
-  echo "Branch pushed. Session complete."
+if has_remote; then
+  echo "Pushing $BRANCH ..."
+  if git push -u origin "$BRANCH"; then
+    echo "Branch pushed. Session complete."
+  else
+    echo "Push failed — resolve issues manually." >&2
+  fi
 else
-  echo "Push failed — resolve issues manually." >&2
+  echo "No remote 'origin' found. Session complete (local only)."
 fi
