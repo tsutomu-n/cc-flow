@@ -73,13 +73,13 @@ if [[ -f "$FILE" && $YES_MODE == false ]]; then
 fi
 
 cat > "$FILE" <<EOF
-# セッション情報共有 - ${TS}
+# Session Handoff Note - ${TS}
 
 ## 🎯 Session Summary
 - **Start Time**: <!-- e.g. 2025-07-21 09:00 -->
 - **End Time**: <!-- e.g. 2025-07-21 17:30 -->
 - **Environment**: <!-- bash 5.1, git 2.40 etc. -->
-- **Elapsed Time**: <!-- e.g. 6時間30分 -->
+- **Elapsed Time**: <!-- e.g. 6h 30m -->
 
 ## ✅ Completed Work
 ### [L] Low Complexity Tasks
@@ -121,7 +121,7 @@ cat > "$FILE" <<EOF
 ## 🗂 Project Overview
 $(if [[ $FULL_MODE == true ]]; then
   # Extract: README "Background & Purpose" section (from heading to next ---)
-  awk '/^## 背景と目的/{flag=1;next}/^---/{flag=0}flag' README.md | sed 's/^/- /'
+  awk '/^## Background & Purpose/{flag=1;next}/^---/{flag=0}flag' README.md | sed 's/^/- /'
 fi)
 
 ## 📂 Key Directories & Files
