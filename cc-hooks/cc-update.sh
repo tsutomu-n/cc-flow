@@ -168,7 +168,9 @@ main() {
     fetch_archive
     compare_and_summarise
     apply_update
-    log "Update complete!"
+    # Clean staging directory after successful update
+rm -rf "$STAGING_DIR" || true
+log "Update complete! (staging cleaned)"
 }
 
 main "$@"
