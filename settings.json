@@ -1,13 +1,9 @@
 {
-    // Defines the workflow version. The /cc-update command can use this to determine future updates.
     "env": {
       "CLAUDE_TEMPLATE_VERSION": "0.1.0"
     },
   
-    // ---- Hooks: The nervous system that defines the AI's autonomous behavior ----
     "hooks": {
-      // [Trigger]: Immediately after the user submits the very first prompt.
-      // [Purpose]: Optionally run automatic bootstrap when the project opts-in.
       "UserPromptSubmit": [
         {
           "hooks": [
@@ -19,8 +15,6 @@
         }
       ],
   
-      // [Trigger]: Just before the AI writes to a file.
-      // [Purpose]: To ensure code quality (lint-checker) and protect critical files (protect-rules).
       "PreToolUse": [
         {
           "matcher": "Write|Edit|MultiEdit",
@@ -37,8 +31,6 @@
         }
       ],
   
-      // [Trigger]: Immediately after the AI writes to a file.
-      // [Purpose]: To automatically record the AI's changes into the Git history.
       "PostToolUse": [
         {
           "matcher": "Edit|Write|MultiEdit",
@@ -52,16 +44,12 @@
       ]
     },
   
-    // ---- Permissions: The set of permissions required for the hooks to operate safely ----
     "permissions": {
       "allow": [
         "Bash(sh .claude/hooks/*.sh)",
         "Bash(git * *)",
-        // Note: git commit and git push are covered by "git * *",
-        // but explicit declaration can improve clarity.
         "Bash(git commit:*)",
         "Bash(git push:*)",
-        // Basic tools for hooks
         "Bash(awk:*)", 
         "Bash(grep:*)", 
         "Bash(sed:*)", 
@@ -71,7 +59,6 @@
         "Bash(dirname:*)",
         "Bash(cut:*)", 
         "Bash(printf:*)",
-        // Optional modern tools
         "Bash(rg * *)", 
         "Bash(fd * *)", 
         "Bash(jq * *)",
