@@ -48,7 +48,7 @@ main() {
             protected_reason="Modifying the AI's own context or cache files is prohibited to maintain session integrity."
             ;;
         # Core strategic documents
-        "GOAL.md"|"AIM.md"|"MISSION.md")
+        "GOAL.md")
             protected_reason="This file contains the strategic project goals and is managed by the human developer. To add notes or ideas, please edit '.claude/NOTEBOOK.md'."
             ;;
         "CLAUDE.md")
