@@ -1,100 +1,114 @@
 #!/bin/sh
-# Claude Code Flow - Self-Installing Bootstrap Hook (v0.1)
+# Claude Code Flow - Self-Installing Bootstrap Hook (v9.2 - Production Grade)
 # Event: UserPromptSubmit
 
-# --- Configuration ---
-# The presence of this file acts as the "installation lock".
-# If this file exists, the bootstrap process will not run again.
-INSTALL_LOCK_FILE=".claude/commands/cc-session-start.md"
+# --- Safety Settings: Exit on error, unset variable, or pipe failure ---
+set -euo pipefail
 
-# --- Idempotency Check ---
-# If the workflow is already installed, do nothing and exit immediately.
-# This ensures the script is safe to run on every prompt.
+# --- Configuration: Define critical constants as readonly ---
+readonly INSTALL_LOCK_FILE=".claude/commands/cc-session-start.md"
+readonly DETECT_TOOLS_PATH=".claude/hooks/detect-tools.sh"
+
+# Ensure base .claude directory exists early
+mkdir -p .claude
+
+# --- User Opt-In Control ---
+# Source the user's configuration file directly in the current shell.
+# This ensures that variables like CCF_AUTO_BOOTSTRAP_ENABLED are available.
+if [ -f "./.clauderc" ]; then
+    . ./.clauderc
+fi
+# This script only proceeds if the user has explicitly enabled it.
+if [ "${CCF_AUTO_BOOTSTRAP_ENABLED:-false}" != "true" ]; then
+    exit 0
+fi
+
+# --- Idempotency Check (The Safety Gate) ---
+# If the workflow is already installed, do nothing.
 if [ -f "$INSTALL_LOCK_FILE" ]; then
     exit 0
 fi
 
-# --- Source Dependencies ---
-# Load helper functions for robust JSON manipulation.
-# We need this to safely handle the user's original prompt.
-. "$(dirname "$0")/detect-tools.sh"
+# --- Prerequisite Checks ---
+# Ensure the core dependency 'detect-tools.sh' exists before sourcing.
+if [ ! -f "$DETECT_TOOLS_PATH" ]; then
+    printf '{"decision":"block","reason":"CRITICAL_ERROR: The core dependency '\''detect-tools.sh'\'' is missing. The workflow cannot be installed. Please restore it from the template repository."}\n'
+    exit 0
+fi
+. "$DETECT_TOOLS_PATH"
 
-# --- First-Run Installation Logic ---
+# Ensure the sourced dependency provides the required functions.
+if ! command -v ccf_json_escape >/dev/null 2>&1; then
+    printf '{"decision":"block","reason":"CRITICAL_ERROR: The function '\''ccf_json_escape'\'' is not available. '\''detect-tools.sh'\'' may be corrupted."}\n'
+    exit 0
+fi
 
-# Capture the user's original prompt from stdin.
-ORIGINAL_PROMPT=$(cat)
-# Safely escape the prompt to prevent JSON injection.
+# --- Directory Scaffolding ---
+# Ensure all necessary directories for commands and the workspace exist.
+mkdir -p .claude/commands \
+         .claude/workspace/logs \
+         .claude/workspace/handoff \
+         .claude/workspace/tmp
+
+# --- Installation Logic ---
+if [ -t 0 ]; then
+    ORIGINAL_PROMPT=""
+else
+    ORIGINAL_PROMPT=$(cat)
+fi
 ESCAPED_PROMPT=$(ccf_json_escape "$ORIGINAL_PROMPT")
 
-# This is the meta-prompt that hijacks the first turn. It contains the
-# complete set of instructions for the AI to create the entire workflow.
-# Using a heredoc (cat <<EOF) is a robust way to handle multiline strings.
 REASON_TO_CLAUDE=$(cat <<EOF
 ASSISTANT_NOTICE: This project requires a one-time setup for the Claude Code Flow. I must perform this setup before I can respond to the user's request.
 
+CORE_PHILOSOPHY: My primary role is to write the first draft of code, based on the goals you set. Your role is to review and provide strategic direction.
+
 My Plan:
-1. I will create the full set of custom commands and project files using the 'Write' tool.
-2. After the setup is complete, I will immediately address the user's original, postponed request.
+1. I will create the full set of custom commands and project files.
+2. After setup is complete, I will address your original request: "$ESCAPED_PROMPT"
 
-Begin setup now. Create the following files with the exact content specified:
-
+Begin setup now. Create the following files:
 <Write file_path="GOAL.md">
-# Project Goals & Strategic Roadmap
-
-This file contains the high-level goals for this project. The AI assistant will use this as a guide for its development tasks.
-
-## Key Objectives
-- [ ] (P1) **[NEEDS_SPEC]** Define the core feature of the application.
-- [ ] (P2) Set up the initial project structure.
-
-## How to Use This File
-- **Priorities**: (P1) = Highest, (P2) = Medium, (P3) = Low.
-- **Tags**: Use \`[NEEDS_SPEC]\` for tasks that require a formal design process before implementation.
+# Project Goals
+- [ ]
 </Write>
-
 <Write file_path=".claude/NOTEBOOK.md">
-# Project Notebook
-
-This is a dynamic workspace for daily thoughts, temporary notes, and tactical instructions for the AI assistant.
-
-- Workflow initialized.
+# Notebook
+-
 </Write>
-
 <Write file_path=".clauderc.template">
 # Claude Code Flow - Workflow Configuration (.clauderc)
-#
-# INSTRUCTIONS:
-# 1. To activate, rename this file to ".clauderc".
-# 2. Uncomment features and set their values to "true" or "false".
-
-# Enable the auto-commit hook.
-# CCF_AUTO_COMMIT_ENABLED="true"
-
-# Enable the pre-write lint checker.
-# CCF_LINT_CHECKER_ENABLED="true"
-
-# Enable protection for critical files.
-# CCF_PROTECT_RULES_ENABLED="true"
-
-# Enable detailed debug logging.
-# CCF_DEBUG="false"
+# (See documentation for details on available options)
 </Write>
-
 <Write file_path=".claude/commands/cc-session-start.md">
 ---
-description: Starts a new development session and restores context.
-allowed-tools: Bash(git status *)
+description: Starts a new development session.
 ---
-## Task: Start Session
-Based on the context below, summarize the project status and propose a plan for today.
-
-## Context
-- **Goals**: @GOAL.md
-- **Notebook**: @.claude/NOTEBOOK.md
-- **Git Status**: !\`git status --porcelain -b\`
-- **Handoff**: @.claude/workspace/handoff/latest.md
+# (Minimal content placeholder)
 </Write>
-
 <Write file_path=".claude/commands/cc-session-stop.md">
 ---
-description: Ends
+description: Ends the daily session.
+---
+# (Minimal content placeholder)
+</Write>
+<Write file_path=".claude/commands/cc-task-done.md">
+---
+description: Logs a completed task.
+---
+# (Minimal content placeholder)
+</Write>
+
+After creating ALL files, output this confirmation message:
+"✅ **Claude Code Flow is now installed!** I am ready to proceed with your original request."
+EOF
+)
+
+printf '{"decision":"block","reason":"%s"}\n' "$(ccf_json_escape "$REASON_TO_CLAUDE")"
+
+exit 0
+
+# --- Version History ---
+# v9.2: Fixed subshell bug, added robust prerequisite checks, ensured directory scaffolding.
+# v9.1: Re-introduced opt-in, added safety settings, dir creation.
+# v9.0: Initial "zero-config" version.
