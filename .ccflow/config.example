@@ -1,3 +1,31 @@
+# ─────────────────────────────────────────────────────────────
+# Claude Code Flow – Config keys (easy English)
+# ─────────────────────────────────────────────────────────────
+# project.name              A short name of the project.
+# project.milestone         Current goal or milestone.
+# project.due_date          Target finish date (YYYY-MM-DD).
+# project.owners[]          People who own / review this project.
+#
+# note.default_mode         “summary” or “full”.
+#                           summary = short template
+#                           full    = long template with extra info
+# note.template             Path to your own Markdown template.
+# note.include_readme_sections[]  List of H2 titles to copy from README.
+# note.extra_sections[]     Extra blocks: ci_status, contacts, file path.
+#
+# git.main_branch           Name of the main branch, e.g. “main”.
+# git.show_last_commits     How many recent commits to show.
+#
+# ci.provider               “github”, “gitlab”, etc.
+# ci.badge_url              Image URL of CI status badge.
+#
+# tools.detect_optional     true = list optional CLI tools if found.
+# tools.list[]              Each item = tool name + minimum version.
+#
+# update.auto_daily         true = run cc-update every day.
+# update.channel            “tag”, “main”, or “dev”.
+# ─────────────────────────────────────────────────────────────
+
 # Claude Code Flow – Project Configuration (example)
 # Copy this file to .ccflow/config and edit as needed.
 

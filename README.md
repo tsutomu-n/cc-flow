@@ -90,6 +90,25 @@ $ cc-hooks/cc-update.sh v0.1.0
 変更サマリは **A** (追加・緑) / **M** (変更・黄) / **D** (削除・赤) で色分け表示されます。
 
 ---
+## Configuration (`.ccflow/config`)
+A project can override default behaviour with a small YAML file.
+Start by copying `.ccflow/config.example` to `.ccflow/config` and edit the keys you need:
+
+```bash
+cp .ccflow/config.example .ccflow/config
+```
+
+Most common keys:
+| Key | Meaning |
+|-----|---------|
+| `project.name` | Short project name shown in notes |
+| `note.default_mode` | `summary` or `full` (template length) |
+| `note.extra_sections` | `ci_status`, `contacts`, or any markdown file |
+| `ci.badge_url` | URL of your CI status badge |
+
+See comments inside `config.example` for all keys.
+
+---
 ## 設定ファイル (`.clauderc`)
 最小構成例:
 ```jsonc
