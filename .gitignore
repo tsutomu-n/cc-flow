@@ -8,10 +8,10 @@
 .update-staging/
 **/.update-staging/
 
-# Kiroflow workspace data
-.ccflow/
-
 
 # Logs
 *.log
 summary.txt
+
+# Session notes (local only)
+.ccflow/NOTE/

@@ -1,0 +1,37 @@
+# Claude Code Flow – Project Configuration (example)
+# Copy this file to .ccflow/config and edit as needed.
+
+project:
+  name: "Awesome Service"
+  milestone: "v1.0 Beta"
+  due_date: "2025-08-15"
+  owners:
+    - "@alice"
+    - "@bob"
+
+note:
+  default_mode: "summary"           # summary | full (used when --full / --summary not given)
+  template: ".ccflow/custom-note.md" # optional custom template path
+  include_readme_sections:
+    - "背景と目的"
+    - "ディレクトリ構成"
+    - "🚀 クイックスタート"
+  extra_sections:
+    - ci_status
+    - contacts
+
+git:
+  main_branch: "main"
+  show_last_commits: 1
+
+ci:
+  provider: "github"
+  badge_url: "https://github.com/org/repo/actions/workflows/ci.yml/badge.svg"
+
+tools:
+  detect_optional: true
+  list:
+    - name: "Docker"
+      min_version: "20.10"
+    - name: "Node.js"
+      min_version: "18"
