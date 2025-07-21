@@ -13,7 +13,7 @@
           "hooks": [
             {
               "type": "command",
-              "command": "sh .claude/hooks/bootstrap.sh"
+              "command": "bash .claude/hooks/bootstrap.sh"
             }
           ]
         }
