@@ -90,6 +90,15 @@ $ cc-hooks/cc-update.sh v0.1.0
 変更サマリは **A** (追加・緑) / **M** (変更・黄) / **D** (削除・赤) で色分け表示されます。
 
 ---
+## Help files
+There are **two** `cc-help.md` files and they have different roles:
+
+| Path | Purpose |
+|------|---------|
+| `.claude/commands/cc-help.md` | AI prompt. It tells the language model **how** to answer when the user types `/cc-help`. |
+| `cc-commands/cc-help.md` | Human-readable manual. It is displayed to the user when `/cc-help` is executed. |
+
+---
 ## Configuration (`.ccflow/config`)
 A project can override default behaviour with a small YAML file.
 Start by copying `.ccflow/config.example` to `.ccflow/config` and edit the keys you need:
