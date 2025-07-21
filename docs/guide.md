@@ -15,6 +15,24 @@ _A detailed manual for daily development with Claude Code_
 
 ---
 
+## Installation Options
+You can set up Claude Code Flow manually or let it install itself.
+
+### Manual (recommended)
+Run once after cloning:
+```bash
+./bootstrap.sh
+```
+
+### Automatic (opt-in)
+Create `.clauderc` with:
+```bash
+CCF_AUTO_BOOTSTRAP_ENABLED="true"
+```
+On your first prompt, the `UserPromptSubmit` hook will run `.claude/hooks/bootstrap.sh` and finish installation.
+
+---
+
 ## Background & Philosophy
 Claude Code Flow was born from the need to **share context quickly** between human devs and the Claude AI assistant.  
 It favors _plain shell scripts_, minimal dependencies, and **explicit Git history** over opaque magic.
