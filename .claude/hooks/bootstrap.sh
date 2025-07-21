@@ -105,7 +105,7 @@ EOF
 )
 
 # --- Decision: write ---
-cat <<WRITE_JSON
+cat <<'WRITE_JSON'
 {
   "decision": "write",
   "writes": [
