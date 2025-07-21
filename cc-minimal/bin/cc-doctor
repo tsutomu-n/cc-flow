@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# cc-doctor — check environment and suggest installs (Ubuntu / WSL)
+set -euo pipefail
+
+MISSING=()
+need() {
+  if ! command -v "$1" >/dev/null 2>&1; then MISSING+=("$1"); fi
+}
+
+need git
+need jq
+need ruff
+need eslint
+need shellcheck
+
+if [ ${#MISSING[@]} -eq 0 ]; then
+  echo "All required tools are installed. ✅"; exit 0; fi
+
+echo "Missing tools: ${MISSING[*]}"; echo
+
+if command -v apt >/dev/null 2>&1; then
+  echo "Suggested install commands (Ubuntu):"
+  echo "  sudo apt update && sudo apt install -y ${MISSING[*]}"
+else
+  echo "Please install the above tools manually (non-apt system)."
+fi
+
+echo "Run again after installation."

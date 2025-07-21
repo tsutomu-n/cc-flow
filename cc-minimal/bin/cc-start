@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# cc-start — Minimal cc-flow v2
+# Usage: cc-start "task-description"
+set -euo pipefail
+
+TASK=${1:-}
+if [ -z "$TASK" ]; then
+  echo "Usage: cc-start <task-description>" >&2
+  exit 1
+fi
+
+BRANCH="feat/${TASK// /-}"
+
+# Create branch if not exists
+if git show-ref --verify --quiet "refs/heads/$BRANCH"; then
+  git switch "$BRANCH"
+else
+  git switch -c "$BRANCH"
+fi
+
+echo "- [ ] $TASK" >> TODO.md
+
+echo "Switched to $BRANCH and added task to TODO.md"
