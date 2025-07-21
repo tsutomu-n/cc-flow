@@ -92,8 +92,6 @@
         "Bash(xargs rm:*)",
         "Bash(sudo:*)",
         "Bash(git config *)",
-
-
         "Bash(brew install *)",
         "Bash(chmod 777 *)",
         "Read(.env*)",
