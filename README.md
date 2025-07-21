@@ -52,7 +52,7 @@ The AI proposes tasks, auto-formats code, and commits through Git hooks.
 
 ## 3. Install / Update
 ```bash
-# Install (already done if you used the template)
+# Install (run once to set up hooks)
 ./bootstrap.sh
 
 # Update to latest version
