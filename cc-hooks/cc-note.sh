@@ -27,6 +27,23 @@ done
 CCFLOW_DIR=".ccflow"
 CONFIG_FILE="$CCFLOW_DIR/config"
 YQ_BIN="$(command -v yq || true)"
+
+# --------------------------------------------------
+# Helper: load YAML config only if yq exists
+# --------------------------------------------------
+load_config() {
+  if [ -n "$YQ_BIN" ] && [ -f "$CONFIG_FILE" ]; then
+    MODE=$("$YQ_BIN" e '.note.mode // "summary"' "$CONFIG_FILE" 2>/dev/null) || MODE="$DEFAULT_MODE"
+    TEMPLATE_PATH=$("$YQ_BIN" e -r '.note.template // ""' "$CONFIG_FILE" 2>/dev/null) || true
+    mapfile -t INCLUDE_SECTIONS < <("$YQ_BIN" e -r '.note.include_sections[]' "$CONFIG_FILE" 2>/dev/null || true)
+    mapfile -t EXTRA_SECTIONS < <("$YQ_BIN" e -r '.note.extra_sections[]' "$CONFIG_FILE" 2>/dev/null || true)
+    CI_BADGE=$("$YQ_BIN" e -r '.ci.badge_url // ""' "$CONFIG_FILE" 2>/dev/null) || true
+  else
+    MODE="$DEFAULT_MODE"
+  fi
+}
+
+load_config
 DEFAULT_MODE="summary"
 TEMPLATE_PATH=""
 INCLUDE_SECTIONS=()
