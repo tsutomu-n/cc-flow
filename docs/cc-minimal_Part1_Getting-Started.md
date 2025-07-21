@@ -11,6 +11,7 @@ Welcome! This guide walks a junior software engineer through installing and runn
 | Git  | Version control | `sudo apt install git`
 | Bash | Run the scripts | pre-installed
 | jq   | Parse JSON      | `sudo apt install jq` |
+| Claude Code CLI | AI assistance | `npm install -g @anthropic-ai/claude` *or* use standalone binary |
 | Claude Code CLI | AI assistance | See [official docs](https://docs.anthropic.com/…)
 
 > Optional linters: `ruff` (Python), `eslint` (JS), `shellcheck` (Shell).
@@ -42,6 +43,10 @@ Reload:
 ```bash
 source ~/.zshrc  # or ~/.bashrc
 ```
+
+> **TIP**  
+> Run `which cc-start` to ensure the shell finds the command.  
+> If it prints the path inside `cc-minimal/bin`, you are ready.
 
 Verify:
 
