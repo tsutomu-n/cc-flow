@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# cc-doc — generate / update docstrings via Claude Code
+# Usage: cc-doc <file>
+set -euo pipefail
+
+FILE=${1:-}
+if [[ -z "$FILE" ]]; then echo "Usage: cc-doc <file>" >&2; exit 1; fi
+if ! command -v claude >/dev/null; then echo "cc-doc: 'claude' CLI not found" >&2; exit 1; fi
+
+cat "$FILE" | claude code /docstring --filename "$FILE" | git apply -
+
+echo "Docstring patch applied to $FILE (if any). Review and commit."

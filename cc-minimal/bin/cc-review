@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# cc-review — AI code review via Claude Code CLI
+# Usage: cc-review [--staged]
+set -euo pipefail
+
+if ! command -v claude >/dev/null; then
+  echo "cc-review: 'claude' CLI not found" >&2; exit 1; fi
+
+MODE="--cached"
+if [[ "${1:-}" == "--staged" ]]; then MODE="--cached"; fi
+
+DIFF=$(git diff $MODE)
+if [[ -z "$DIFF" ]]; then
+  echo "No changes to review."; exit 0; fi
+
+echo "$DIFF" | claude code /code-review
