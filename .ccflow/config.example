@@ -41,9 +41,9 @@ note:
   default_mode: "summary"           # summary | full (used when --full / --summary not given)
   template: ".ccflow/custom-note.md" # optional custom template path
   include_readme_sections:
-    - "背景と目的"
-    - "ディレクトリ構成"
-    - "🚀 クイックスタート"
+    - "Background & Purpose"
+    - "Directory Layout"
+    - "🚀 Quick Start"
   extra_sections:
     - ci_status
     - contacts

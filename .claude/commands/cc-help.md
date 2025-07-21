@@ -51,23 +51,23 @@ You MUST NOT simply display a static document. Instead, you MUST provide a helpf
 /cc-update [<version>] [-y|--yes]
 ```
 
-| 引数/オプション | 説明 |
+| Argument / Option | Description |
 |----------------|------|
-| `<version>`    | 更新先のタグ名。省略時は upstream の `VERSION` を参照し、見つからなければ `main` ブランチへフォールバック。 |
-| `-y, --yes`    | すべてのプロンプトを自動で *Yes* にして非対話で実行。CI/CD や定期ジョブ向け。 |
-| `SKIP_FETCH=true` | 環境変数。リモートからの取得をスキップし、ローカル `.update-staging/` の内容のみで検証。 |
+| `<version>` | Tag (version) to update to. When omitted, reads `VERSION` from upstream and falls back to the `main` branch if not found. |
+| `-y, --yes` | Answer all prompts with *Yes* and run non-interactively. Useful for CI/CD or scheduled jobs. |
+| `SKIP_FETCH=true` | Environment variable. Skip remote fetch and validate only the contents in `.update-staging/`. |
 
-**色付きサマリ**: `A` 追加 (緑) / `M` 変更 (黄) / `D` 削除 (赤)
+**Colored summary**: `A` added (green) / `M` modified (yellow) / `D` deleted (red)
 
-**例**
+**Examples**
 ```bash
-# 最新版へ非対話アップデート
+# Non-interactive update to the latest version
 cc-hooks/cc-update.sh -y
 
-# 特定バージョンへ固定
+# Pin to a specific version
 cc-hooks/cc-update.sh v0.1.0
 ```
 
-> バリデーションエラー時は途中で終了し、変更はロールバックされます。
+> If validation fails, the process stops early and changes are rolled back.
 
 Now, respond to my request. Be the helpful, interactive expert.

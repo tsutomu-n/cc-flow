@@ -75,66 +75,66 @@ fi
 cat > "$FILE" <<EOF
 # セッション情報共有 - ${TS}
 
-## 🎯 セッション概要
-- **開始時刻**: <!-- 例: 2025-07-21 09:00 -->
-- **終了時刻**: <!-- 例: 2025-07-21 17:30 -->
-- **環境**: <!-- bash 5.1, git 2.40 など -->
-- **作業時間**: <!-- 例: 6時間30分 -->
+## 🎯 Session Summary
+- **Start Time**: <!-- 例: 2025-07-21 09:00 -->
+- **End Time**: <!-- 例: 2025-07-21 17:30 -->
+- **Environment**: <!-- bash 5.1, git 2.40 など -->
+- **Elapsed Time**: <!-- 例: 6時間30分 -->
 
-## ✅ 完了した作業
-### [L] 低複雑度タスク
+## ✅ Completed Work
+### [L] Low Complexity Tasks
 - 
-### [M] 中複雑度タスク
+### [M] Medium Complexity Tasks
 - 
-### [H] 高複雑度タスク
-- 
-
-## 🔄 進行中の作業
-### 現在の状況
-- 
-### 技術的決定事項
-- 
-### 発見された課題
+### [H] High Complexity Tasks
 - 
 
-## 📋 次回セッションへの引き継ぎ
+## 🔄 In-Progress Work
+### Current Status
+- 
+### Technical Decisions
+- 
+### Issues Found
+- 
+
+## 📋 Handoff to Next Session
 1. 
 2. 
 
-## 🧠 推奨次回アクション
+## 🧠 Recommended Next Actions
 - 
 
-## 📊 パフォーマンス・メトリクス
+## 📊 Performance Metrics
 - 
 
-## 🗺 プロジェクト現在地
-- **マイルストーン**: <!-- 例: v1.0 Alpha -->
-- **期日**: <!-- 例: 2025-07-31 -->
+## 🗺 Project Milestone
+- **Milestone**: <!-- 例: v1.0 Alpha -->
+- **Due Date**: <!-- 例: 2025-07-31 -->
 
-## 🔀 作業ブランチ & 直近コミット
+## 🔀 Branch & Recent Commits
 - **Branch**: $(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "(unknown)")
 - **Commit**:  $(git log -1 --pretty="%h %s" 2>/dev/null || echo "(unknown)")
 
-## ⭕ 未完了タスク一覧
-- [ ] <!-- 優先度: 誰が何を、見積 -->
+## ⭕ Pending Tasks
+- [ ] <!-- Priority: Who does what, estimate -->
 
-## 🗂 プロジェクト概要
+## 🗂 Project Overview
 $(if [[ $FULL_MODE == true ]]; then
   # 抜粋: README の「背景と目的」セクション (見出し## 背景と目的 から次の --- まで)
   awk '/^## 背景と目的/{flag=1;next}/^---/{flag=0}flag' README.md | sed 's/^/- /'
 fi)
 
-## 📂 重要ディレクトリ・ファイル
+## 📂 Key Directories & Files
 $(if [[ $FULL_MODE == true ]]; then
   awk '/^## ディレクトリ構成/{flag=1;next}/^---/{flag=0}flag' README.md
 fi)
 
-## 🚀 クイックスタート
+## 🚀 Quick Start
 $(if [[ $FULL_MODE == true ]]; then
-  awk '/^## 🚀 クイックスタート/{flag=1;next}/^##/{if(flag && NR>1)exit}flag' README.md
+  awk '/^## 🚀 Quick Start/{flag=1;next}/^##/{if(flag && NR>1)exit}flag' README.md
 fi)
 
-## ➕ 追加情報
+## ➕ Additional Information
 $(for sec in "${EXTRA_SECTIONS[@]}"; do
   case "$sec" in
     ci_status)
