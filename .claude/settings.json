@@ -1,7 +1,7 @@
 {
     // Defines the workflow version. The /cc-update command can use this to determine future updates.
     "env": {
-      "CLAUDE_TEMPLATE_VERSION": "-y"
+      "CLAUDE_TEMPLATE_VERSION": "0.1.0"
     },
   
     // ---- Hooks: The nervous system that defines the AI's autonomous behavior ----
@@ -74,7 +74,9 @@
         "Bash(fd * *)",
         "Bash(jq * *)",
         "Bash(bat * *)",
-        "Bash(delta * *)"
+        "Bash(delta * *)",
+        "Bash(git commit:*)",
+        "Bash(git push:*)"
       ],
       "deny": [
         "Bash(rm -rf:*)",
@@ -90,10 +92,8 @@
         "Bash(xargs rm:*)",
         "Bash(sudo:*)",
         "Bash(git config *)",
-        "Bash(git push:*)",
-        "Bash(git commit:*)",
-        "Bash(git reset:*)",
-        "Bash(git rebase:*)",
+
+
         "Bash(brew install *)",
         "Bash(chmod 777 *)",
         "Read(.env*)",
